@@ -106,10 +106,10 @@ public class GMCharts: UIView {
         self.addSubview(label)
     }
     
-    public func drawLine(array: [Double], color: UIColor, isFilled: Bool = false) {
+    public func drawLine(array: [GMChartModel], color: UIColor, isFilled: Bool = false) {
         
-        let maxData = array.max() ?? 0
-        let minData = array.min() ?? 0
+        let maxData = (array.max(by: { $0.data > $1.data }) ?? GMChartModel(km: 0, data: 0)).data
+        let minData = (array.min(by: { $0.data < $1.data }) ?? GMChartModel(km: 0, data: 0)).data
         
         // 每個點的x間距
         let disX = chartWidth / CGFloat(array.count)
@@ -118,8 +118,8 @@ public class GMCharts: UIView {
         var startY: CGFloat = 0
         
         for (index, item) in array.enumerated() {
-            let a = Double(chartHeight) / (maxData - minData) * (maxData - item)
-            let y = CGFloat(a) + edge.top
+            let a = chartHeight / (maxData - minData) * (maxData - item.data)
+            let y = a + edge.top
             
             var x: CGFloat = 0
             if index == 0 {
@@ -153,38 +153,30 @@ public class GMCharts: UIView {
         layer.addSublayer(shapeLayer)
     }
     
-    public func drawSeparators(distance: Int, array: [Double], unit: Unit) {
+    public func drawSeparators(distance: Double, unit: Unit) {
         
+        let separators = getSeparatorArray(distance: distance)
+        
+        drawBottomLabel(text: "0", x: chartMinX, width: 20)
+        drawBottomLabel(text: String(format: "%.2f %@", distance, unit.rawValue), x: chartMaxX + edge.right - 50, width: 50)
+
         //每個點的x間距
-        let disX = chartWidth / CGFloat(array.count)
+        let disX = chartWidth / (CGFloat(separators.count) + 1)
         
-        for (index, item) in array.enumerated() {
-            let x = edge.left + disX * CGFloat(index) - 10
+        for (index, item) in separators.enumerated() {
+            let x = chartMinX + disX * CGFloat(index + 1)
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: x, y: chartMinY))
+            path.addLine(to: CGPoint(x: x, y: height - edge.bottom))
             
-            if index == 0 {
-                drawBottomLabel(text: "", x: x, width: 20)
-            } else if index == array.count - 1 {
-                drawBottomLabel(text: String(format: "%.2f %@", item, unit.rawValue), x: x, width: 50)
-            } else {
-                //如果很靠近右邊就不要畫
-                if (x) < chartMaxX - 30 {
-                    let path = UIBezierPath()
-                    path.move(to: CGPoint(x: x + 10, y: chartMinY))
-                    path.addLine(to: CGPoint(x: x + 10, y: height - edge.bottom))
-                    
-                    let shapeLayer = CAShapeLayer()
-                    shapeLayer.path = path.cgPath
-                    shapeLayer.lineWidth = 1.0
-                    shapeLayer.strokeColor = labelColor.cgColor
-                    layer.addSublayer(shapeLayer)
-                    
-                    drawBottomLabel(text: "\(item)", x: x, width: 20)
-                    
-                }
-            }
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = path.cgPath
+            shapeLayer.lineWidth = 1.0
+            shapeLayer.strokeColor = labelColor.cgColor
+            layer.addSublayer(shapeLayer)
+            
+            drawBottomLabel(text: "\(item)", x: x, width: 20)
         }
-        
-        
     }
     
     func drawBottomLabel(text: String, x: CGFloat, width: CGFloat) {
@@ -194,6 +186,37 @@ public class GMCharts: UIView {
         label.font = UIFont(name: "Avenir", size: 10)
         label.text = text
         self.addSubview(label)
+    }
+    
+    func getSeparatorArray(distance: Double) -> [Double] {
+        var array: [Double] = []
+        switch distance {
+        case 2...3:
+            array = [1]
+        case 3...4:
+            array = [1, 2]
+        case 4...5:
+            array = [1, 2, 3]
+        case 5...6:
+            array = [1, 2, 3, 4]
+        case 6...7:
+            array = [2, 4]
+        case 7...9:
+            array = [2, 4, 6]
+        case 9...11:
+            array = [2, 4, 6, 8]
+        case 11...13:
+            array = [3, 6, 9]
+        case 13...16:
+            array = [3, 6, 9, 12]
+        case 16...17:
+            array = [4, 8, 12]
+        case 17...25:
+            array = [4, 8, 12, 16]
+        default:
+            break
+        }
+        return array
     }
 
 }

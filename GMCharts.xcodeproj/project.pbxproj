@@ -15,7 +15,20 @@
 		443C411322B2020400FB0C6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443C411222B2020400FB0C6F /* Assets.xcassets */; };
 		443C411622B2020400FB0C6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C411422B2020400FB0C6F /* LaunchScreen.storyboard */; };
 		443C411C22B2023500FB0C6F /* GMCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443C40F822B2011300FB0C6F /* GMCharts.framework */; };
+		443C411E22B22C2D00FB0C6F /* GMChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C411D22B22C2C00FB0C6F /* GMChartModel.swift */; };
+		443C412622B232BC00FB0C6F /* GMChartsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C412522B232BC00FB0C6F /* GMChartsTests.swift */; };
+		443C412822B232BC00FB0C6F /* GMCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443C40F822B2011300FB0C6F /* GMCharts.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		443C412922B232BC00FB0C6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 443C40EF22B2011300FB0C6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 443C40F722B2011300FB0C6F;
+			remoteInfo = GMCharts;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		443C40F822B2011300FB0C6F /* GMCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GMCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +42,10 @@
 		443C411222B2020400FB0C6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		443C411522B2020400FB0C6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		443C411722B2020400FB0C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		443C411D22B22C2C00FB0C6F /* GMChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMChartModel.swift; sourceTree = "<group>"; };
+		443C412322B232BC00FB0C6F /* GMChartsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GMChartsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		443C412522B232BC00FB0C6F /* GMChartsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMChartsTests.swift; sourceTree = "<group>"; };
+		443C412722B232BC00FB0C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +64,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		443C412022B232BC00FB0C6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				443C412822B232BC00FB0C6F /* GMCharts.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -55,6 +80,7 @@
 			children = (
 				443C40FA22B2011300FB0C6F /* GMCharts */,
 				443C410A22B2020200FB0C6F /* TestProject */,
+				443C412422B232BC00FB0C6F /* GMChartsTests */,
 				443C40F922B2011300FB0C6F /* Products */,
 				443C411B22B2023500FB0C6F /* Frameworks */,
 			);
@@ -65,6 +91,7 @@
 			children = (
 				443C40F822B2011300FB0C6F /* GMCharts.framework */,
 				443C410922B2020200FB0C6F /* TestProject.app */,
+				443C412322B232BC00FB0C6F /* GMChartsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +102,7 @@
 				443C40FB22B2011300FB0C6F /* GMCharts.h */,
 				443C40FC22B2011300FB0C6F /* Info.plist */,
 				443C410322B2012B00FB0C6F /* GMCharts.swift */,
+				443C411D22B22C2C00FB0C6F /* GMChartModel.swift */,
 			);
 			path = GMCharts;
 			sourceTree = "<group>";
@@ -97,6 +125,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		443C412422B232BC00FB0C6F /* GMChartsTests */ = {
+			isa = PBXGroup;
+			children = (
+				443C412522B232BC00FB0C6F /* GMChartsTests.swift */,
+				443C412722B232BC00FB0C6F /* Info.plist */,
+			);
+			path = GMChartsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +185,24 @@
 			productReference = 443C410922B2020200FB0C6F /* TestProject.app */;
 			productType = "com.apple.product-type.application";
 		};
+		443C412222B232BC00FB0C6F /* GMChartsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 443C412B22B232BC00FB0C6F /* Build configuration list for PBXNativeTarget "GMChartsTests" */;
+			buildPhases = (
+				443C411F22B232BC00FB0C6F /* Sources */,
+				443C412022B232BC00FB0C6F /* Frameworks */,
+				443C412122B232BC00FB0C6F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				443C412A22B232BC00FB0C6F /* PBXTargetDependency */,
+			);
+			name = GMChartsTests;
+			productName = GMChartsTests;
+			productReference = 443C412322B232BC00FB0C6F /* GMChartsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -163,6 +218,9 @@
 						LastSwiftMigration = 1020;
 					};
 					443C410822B2020200FB0C6F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					443C412222B232BC00FB0C6F = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
 				};
@@ -182,6 +240,7 @@
 			targets = (
 				443C40F722B2011300FB0C6F /* GMCharts */,
 				443C410822B2020200FB0C6F /* TestProject */,
+				443C412222B232BC00FB0C6F /* GMChartsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -204,6 +263,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		443C412122B232BC00FB0C6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -211,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443C411E22B22C2D00FB0C6F /* GMChartModel.swift in Sources */,
 				443C410422B2012B00FB0C6F /* GMCharts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +291,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		443C411F22B232BC00FB0C6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				443C412622B232BC00FB0C6F /* GMChartsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		443C412A22B232BC00FB0C6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 443C40F722B2011300FB0C6F /* GMCharts */;
+			targetProxy = 443C412922B232BC00FB0C6F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		443C410F22B2020200FB0C6F /* Main.storyboard */ = {
@@ -457,6 +540,42 @@
 			};
 			name = Release;
 		};
+		443C412C22B232BC00FB0C6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JRH8E985QQ;
+				INFOPLIST_FILE = GMChartsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bomdic.gmcharts.GMChartsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		443C412D22B232BC00FB0C6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JRH8E985QQ;
+				INFOPLIST_FILE = GMChartsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bomdic.gmcharts.GMChartsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -483,6 +602,15 @@
 			buildConfigurations = (
 				443C411922B2020400FB0C6F /* Debug */,
 				443C411A22B2020400FB0C6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		443C412B22B232BC00FB0C6F /* Build configuration list for PBXNativeTarget "GMChartsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				443C412C22B232BC00FB0C6F /* Debug */,
+				443C412D22B232BC00FB0C6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -27,10 +27,10 @@ class ViewController: UIViewController {
         chart.edge = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
 
         chart.redraw()
-        chart.drawLine(array: array, color: .red)
+//        chart.drawLine(array: array, color: .red)
         
-        chart.drawSeparators(distance: 8, array: [1, 2, 3, 4, 5, 6, 7, 8.24], unit: .km)
-        
+        chart.drawSeparators(distance: 11.5, unit: .km)
+                
         view.addSubview(chart)
     }
 
