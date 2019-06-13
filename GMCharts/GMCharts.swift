@@ -23,6 +23,7 @@ public class GMCharts: UIView {
     public var labelColor: UIColor = .white
     public var labelSize: CGFloat = 10
     public var space: CGFloat = 10
+    public var borderColor: UIColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
     
     private var rTopLabel: UILabel = UILabel()
     private var rMidLabel: UILabel = UILabel()
@@ -78,7 +79,7 @@ public class GMCharts: UIView {
         shapeLayer.path = path.cgPath
         shapeLayer.lineWidth = 1.0
         shapeLayer.fillColor = nil
-        shapeLayer.strokeColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2).cgColor
+        shapeLayer.strokeColor = borderColor.cgColor
         layer.addSublayer(shapeLayer)
         
     }
@@ -172,7 +173,7 @@ public class GMCharts: UIView {
         }
     }
     
-    public func drawSeparators(distance: CGFloat, unit: Unit) {
+    public func drawSeparators(distance: CGFloat, unit: Unit, color: UIColor = .white) {
         
         let separators = getSeparatorArray(distance: distance)
         
@@ -186,12 +187,12 @@ public class GMCharts: UIView {
             let x = chartMinX + disX * CGFloat(index + 1)
             let path = UIBezierPath()
             path.move(to: CGPoint(x: x, y: chartMinY))
-            path.addLine(to: CGPoint(x: x, y: height - edge.bottom))
+            path.addLine(to: CGPoint(x: x, y: chartMaxY))
             
             let shapeLayer = CAShapeLayer()
             shapeLayer.path = path.cgPath
             shapeLayer.lineWidth = 1.0
-            shapeLayer.strokeColor = labelColor.cgColor
+            shapeLayer.strokeColor = color.cgColor
             layer.addSublayer(shapeLayer)
             
             drawBottomLabel(text: "\(item)", x: x, width: 20)
