@@ -14,6 +14,10 @@ public class GMCharts: UIView {
         case right, left
     }
     
+    public enum Unit: String {
+        case km, mile
+    }
+    
     public var edge = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 60)
     public var chartBottom: CGFloat = 60.0
     public var labelColor: UIColor = .white
@@ -77,7 +81,6 @@ public class GMCharts: UIView {
         shapeLayer.strokeColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2).cgColor
         layer.addSublayer(shapeLayer)
         
-        print("minX:", chartMinX, "maxX:", chartMaxX, "minY:", chartMinY, "maxY:", chartMaxY)
     }
     
     func setLabels() {
@@ -150,5 +153,47 @@ public class GMCharts: UIView {
         layer.addSublayer(shapeLayer)
     }
     
+    public func drawSeparators(distance: Int, array: [Double], unit: Unit) {
+        
+        //每個點的x間距
+        let disX = chartWidth / CGFloat(array.count)
+        
+        for (index, item) in array.enumerated() {
+            let x = edge.left + disX * CGFloat(index) - 10
+            
+            if index == 0 {
+                drawBottomLabel(text: "", x: x, width: 20)
+            } else if index == array.count - 1 {
+                drawBottomLabel(text: String(format: "%.2f %@", item, unit.rawValue), x: x, width: 50)
+            } else {
+                //如果很靠近右邊就不要畫
+                if (x) < chartMaxX - 30 {
+                    let path = UIBezierPath()
+                    path.move(to: CGPoint(x: x + 10, y: chartMinY))
+                    path.addLine(to: CGPoint(x: x + 10, y: height - edge.bottom))
+                    
+                    let shapeLayer = CAShapeLayer()
+                    shapeLayer.path = path.cgPath
+                    shapeLayer.lineWidth = 1.0
+                    shapeLayer.strokeColor = labelColor.cgColor
+                    layer.addSublayer(shapeLayer)
+                    
+                    drawBottomLabel(text: "\(item)", x: x, width: 20)
+                    
+                }
+            }
+        }
+        
+        
+    }
+    
+    func drawBottomLabel(text: String, x: CGFloat, width: CGFloat) {
+        let label = UILabel(frame: CGRect(x: x, y: height - edge.bottom, width: width, height: 20))
+        label.textColor = .yellow
+        label.textAlignment = .center
+        label.font = UIFont(name: "Avenir", size: 10)
+        label.text = text
+        self.addSubview(label)
+    }
 
 }
