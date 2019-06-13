@@ -20,16 +20,25 @@ public class ChartView: UIView {
     public var labelSize: CGFloat = 10
     public var space: CGFloat = 10
     
-    var rTopLabel: UILabel = UILabel()
-    var rMidLabel: UILabel = UILabel()
-    var rBottomLabel: UILabel = UILabel()
+    private var rTopLabel: UILabel = UILabel()
+    private var rMidLabel: UILabel = UILabel()
+    private var rBottomLabel: UILabel = UILabel()
     
-    var lTopLabel: UILabel = UILabel()
-    var lBottomLabel: UILabel = UILabel()
+    private var lTopLabel: UILabel = UILabel()
+    private var lBottomLabel: UILabel = UILabel()
+    
+    private var width: CGFloat = 0
+    private var height: CGFloat = 0
+    private var chartMinX: CGFloat = 0
+    private var chartMaxX: CGFloat = 0
+    private var chartMinY: CGFloat = 0
+    private var chartMaxY: CGFloat = 0
+    private var chartHeight: CGFloat = 0
+    private var chartWidth: CGFloat = 0
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .clear
+        backgroundColor = .black
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,16 +46,29 @@ public class ChartView: UIView {
         backgroundColor = .clear
     }
     
+    public func redraw() {
+        width = frame.width
+        height = frame.height
+        chartMinX = edge.left
+        chartMaxX = width - edge.right
+        chartMinY = edge.top
+        chartMaxY = height - edge.bottom - chartBottom
+        chartHeight = chartMaxY - chartMinY
+        chartWidth = chartMaxX - chartMinX
+        
+        drawBorder()
+    }
+    
     func drawBorder() {
         
         let path = UIBezierPath()
         // 畫左邊的線
-        path.move(to: CGPoint(x: edge.left, y: edge.top))
-        path.addLine(to: CGPoint(x: edge.left, y: self.frame.height))
+        path.move(to: CGPoint(x: chartMinX, y: chartMinY))
+        path.addLine(to: CGPoint(x: chartMinX, y: chartMaxY))
         
         // 畫右邊的線
-        path.move(to: CGPoint(x: self.frame.width - edge.right, y: edge.top))
-        path.addLine(to: CGPoint(x: self.frame.width - edge.right, y: self.frame.height - edge.bottom))
+        path.move(to: CGPoint(x: chartMaxX, y: chartMinY))
+        path.addLine(to: CGPoint(x: chartMaxX, y: chartMaxY))
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
@@ -54,20 +76,22 @@ public class ChartView: UIView {
         shapeLayer.fillColor = nil
         shapeLayer.strokeColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2).cgColor
         layer.addSublayer(shapeLayer)
+        
+        print("minX:", chartMinX, "maxX:", chartMaxX, "minY:", chartMinY, "maxY:", chartMaxY)
     }
     
     func setLabels() {
-        drawLabel(label: rTopLabel, rl: .right, y: edge.top - space)
-        drawLabel(label: rMidLabel, rl: .right, y: (self.frame.height - chartBottom) / 2)
-        drawLabel(label: rBottomLabel, rl: .right, y: self.frame.height - chartBottom)
+        drawLabel(label: rTopLabel, rl: .right, y: chartMinY - space)
+        drawLabel(label: rMidLabel, rl: .right, y: (height - chartBottom) / 2)
+        drawLabel(label: rBottomLabel, rl: .right, y: height - chartBottom)
         
-        drawLabel(label: lTopLabel, rl: .left, y: edge.top - space)
-        drawLabel(label: lBottomLabel, rl: .left, y: self.frame.height - chartBottom)
+        drawLabel(label: lTopLabel, rl: .left, y: chartMinY - space)
+        drawLabel(label: lBottomLabel, rl: .left, y: height - chartBottom)
     }
     
     func drawLabel(label: UILabel, rl: Direction, y: CGFloat) {
-        let x = (rl == .right) ? (self.frame.width - edge.right) : 5
-        let width = (rl == .right) ? (edge.right - 5) : edge.left
+        let x = (rl == .right) ? chartMaxX : 5
+        let width = (rl == .right) ? (chartMaxX - 5) : chartMinX
         
         label.frame = CGRect(x: x, y: y - labelSize, width: width, height: 40)
         label.textColor = labelColor
@@ -79,25 +103,51 @@ public class ChartView: UIView {
         self.addSubview(label)
     }
     
-    func drawLine(array: [Double], color: UIColor) {
-        
-        let minY = edge.top
-        let maxY = self.frame.height - chartBottom
-        let height = maxY - minY
+    func drawLine(array: [Double], color: UIColor, isFilled: Bool = false) {
         
         let maxData = array.max() ?? 0
         let minData = array.min() ?? 0
 
         // 每個點的x間距
-        let disX = (self.frame.width - edge.left - edge.right) / CGFloat(array.count)
+        let disX = chartWidth / CGFloat(array.count)
         
         let path = UIBezierPath()
-        var minX: Double = 0
+        var startY: CGFloat = 0
         
         for (index, item) in array.enumerated() {
-            var y = Double(height) / (maxData - minData) * (maxData - item)
-            var disY = CGFloat(y) - edge.top
+            let a = Double(chartHeight) / (maxData - minData) * (maxData - item)
+            let y = CGFloat(a) + edge.top
+            
+            var x: CGFloat = 0
+            if index == 0 {
+                startY = y
+                x = chartMinX
+                path.move(to: CGPoint(x: x, y: y))
+                
+            } else if index == array.count - 1 {
+                x = chartMaxX
+                path.addLine(to: CGPoint(x: x, y: y))
+                
+            } else {
+                x = chartMinX + disX * CGFloat(index)
+                path.addLine(to: CGPoint(x: x, y: y))
+                
+            }
         }
+        
+         if isFilled {
+            path.addLine(to: CGPoint(x: chartMaxX, y: chartMaxY))
+            path.addLine(to: CGPoint(x: chartMinX, y: chartMaxY))
+            path.addLine(to: CGPoint(x: chartMinX, y: startY))
+        }
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.lineWidth = 1.0
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.fillColor = isFilled ? color.cgColor : nil
+        
+        layer.addSublayer(shapeLayer)
     }
     
 }
