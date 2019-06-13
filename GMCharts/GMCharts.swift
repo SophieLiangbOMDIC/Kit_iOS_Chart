@@ -106,54 +106,73 @@ public class GMCharts: UIView {
         self.addSubview(label)
     }
     
-    public func drawLine(array: [GMChartModel], color: UIColor, isFilled: Bool = false) {
+    public func drawLine(array: [GMChartModel], color: UIColor, unit: Unit, isFilled: Bool = false) {
         
-        let maxData = (array.max(by: { $0.data > $1.data }) ?? GMChartModel(km: 0, data: 0)).data
-        let minData = (array.min(by: { $0.data < $1.data }) ?? GMChartModel(km: 0, data: 0)).data
+        let maxData = (array.max(by: { $0.data < $1.data }) ?? GMChartModel(distance: 0, data: 0)).data
+        let minData = (array.min(by: { $0.data < $1.data }) ?? GMChartModel(distance: 0, data: 0)).data
         
-        // 每個點的x間距
-        let disX = chartWidth / CGFloat(array.count)
+        // 分隔線的x間距
+        let maxDistance = (array.max(by: { $0.distance < $1.distance }) ?? GMChartModel(distance: 0, data: 0)).distance
+        var separators = getSeparatorArray(distance: maxDistance)
+        separators.append(Double(maxDistance))
+        let sepX = chartWidth / (CGFloat(separators.count))
         
-        let path = UIBezierPath()
-        var startY: CGFloat = 0
+        var datas: [[CGFloat]] = []
         
-        for (index, item) in array.enumerated() {
-            let a = chartHeight / (maxData - minData) * (maxData - item.data)
-            let y = a + edge.top
-            
-            var x: CGFloat = 0
-            if index == 0 {
-                startY = y
-                x = chartMinX
-                path.move(to: CGPoint(x: x, y: y))
-                
-            } else if index == array.count - 1 {
-                x = chartMaxX
-                path.addLine(to: CGPoint(x: x, y: y))
-                
+        for (index, i) in separators.enumerated() {
+            if index > 0 {
+                datas.append(array.filter { CGFloat(separators[index - 1]) < $0.distance && $0.distance <= CGFloat(i) }.map{ $0.data })
             } else {
-                x = chartMinX + disX * CGFloat(index)
-                path.addLine(to: CGPoint(x: x, y: y))
-                
+                datas.append(array.filter { $0.distance <= CGFloat(i) }.map{ $0.data })
             }
         }
         
-        if isFilled {
-            path.addLine(to: CGPoint(x: chartMaxX, y: chartMaxY))
-            path.addLine(to: CGPoint(x: chartMinX, y: chartMaxY))
-            path.addLine(to: CGPoint(x: chartMinX, y: startY))
+        for (index, data) in datas.enumerated() {
+            
+            let path = UIBezierPath()
+            var startY: CGFloat = 0
+            let startX: CGFloat = chartMinX + CGFloat(index) * sepX
+            let endX: CGFloat = startX + sepX
+
+            // 每個點之間的x間距
+            let disX = sepX / CGFloat(data.count)
+            
+            for (index, item) in data.enumerated() {
+                
+                let a = chartHeight / (maxData - minData) * (maxData - item)
+                let y = a + edge.top
+                
+                if index == 0 {
+                    startY = y
+                    path.move(to: CGPoint(x: startX, y: y))
+                    
+                } else if index == array.count - 1 {
+                    path.addLine(to: CGPoint(x: startX, y: y))
+                    
+                } else {
+                    path.addLine(to: CGPoint(x: startX + disX * CGFloat(index), y: y))
+                    
+                }
+            }
+            
+            if isFilled {
+                path.addLine(to: CGPoint(x: endX, y: chartMaxY))
+                path.addLine(to: CGPoint(x: startX, y: chartMaxY))
+                path.addLine(to: CGPoint(x: startX, y: startY))
+            }
+            
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = path.cgPath
+            shapeLayer.lineWidth = 1.0
+            shapeLayer.strokeColor = color.cgColor
+            shapeLayer.fillColor = isFilled ? color.cgColor : nil
+            
+            layer.addSublayer(shapeLayer)
+
         }
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.lineWidth = 1.0
-        shapeLayer.strokeColor = color.cgColor
-        shapeLayer.fillColor = isFilled ? color.cgColor : nil
-        
-        layer.addSublayer(shapeLayer)
     }
     
-    public func drawSeparators(distance: Double, unit: Unit) {
+    public func drawSeparators(distance: CGFloat, unit: Unit) {
         
         let separators = getSeparatorArray(distance: distance)
         
@@ -188,7 +207,7 @@ public class GMCharts: UIView {
         self.addSubview(label)
     }
     
-    func getSeparatorArray(distance: Double) -> [Double] {
+    func getSeparatorArray(distance: CGFloat) -> [Double] {
         var array: [Double] = []
         switch distance {
         case 2...3:

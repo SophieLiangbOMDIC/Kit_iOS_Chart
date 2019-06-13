@@ -10,7 +10,11 @@ import Foundation
 
 public struct GMChartModel {
     
-    public var km: CGFloat
+    public var distance: CGFloat
     public var data: CGFloat
     
+    public init(distance: CGFloat, data: CGFloat) {
+        self.distance = distance
+        self.data = data
+    }
 }

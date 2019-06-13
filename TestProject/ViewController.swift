@@ -18,6 +18,17 @@ class ViewController: UIViewController {
         }
         return arr
     }()
+    
+    let models: [GMChartModel] = {
+        var arr: [GMChartModel] = []
+        for i in 0...100 {
+            arr.append(GMChartModel(distance: CGFloat(i / 10), data: CGFloat.random(in: 0...5)))
+        }
+        for i in 100...200 {
+            arr.append(GMChartModel(distance: CGFloat(i / 20), data: CGFloat.random(in: 0...5)))
+        }
+        return arr
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +38,10 @@ class ViewController: UIViewController {
         chart.edge = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
 
         chart.redraw()
+        chart.drawLine(array: models, color: .red, unit: .km)
 //        chart.drawLine(array: array, color: .red)
-        
-        chart.drawSeparators(distance: 11.5, unit: .km)
+        let distance = models.max { $0.distance < $1.distance }!.distance
+        chart.drawSeparators(distance: distance, unit: .km)
                 
         view.addSubview(chart)
     }
