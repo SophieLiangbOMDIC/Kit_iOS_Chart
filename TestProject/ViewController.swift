@@ -19,27 +19,29 @@ class ViewController: UIViewController {
         return arr
     }()
     
-    let models: [GMChartModel] = {
+    var models: [GMChartModel] {
         var arr: [GMChartModel] = []
-        for i in 0...100 {
-            arr.append(GMChartModel(distance: CGFloat(i / 10), data: CGFloat.random(in: 0...5)))
+        for i in 0...50 {
+            arr.append(GMChartModel(distance: CGFloat(i) / 5.0, data: CGFloat.random(in: 0...5)))
         }
-        for i in 100...200 {
-            arr.append(GMChartModel(distance: CGFloat(i / 20), data: CGFloat.random(in: 0...5)))
+        for i in 50...82 {
+            arr.append(GMChartModel(distance: CGFloat(i) / 10.0, data: CGFloat.random(in: 0...5)))
         }
         return arr
-    }()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let chart = GMCharts(frame: CGRect(x: 0, y: 60, width: 375, height: 200))
-        chart.chartBottom = 10
+        let chart = GMCharts(frame: CGRect(x: 0, y: 60, width: self.view.frame.width, height: self.view.frame.height / 2))
+        chart.chartBottom = 50
         chart.edge = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
+        chart.borderColor = .green
 
         chart.redraw()
         chart.drawLine(array: models, color: .red, unit: .km)
-//        chart.drawLine(array: array, color: .red)
+//        chart.drawLine(array: models, color: .yellow, unit: .km)
+
         let distance = models.max { $0.distance < $1.distance }!.distance
         chart.drawSeparators(distance: distance, unit: .km)
                 
