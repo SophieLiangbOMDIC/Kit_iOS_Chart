@@ -1,16 +1,16 @@
 //
 //  ViewController.swift
-//  Charts
+//  TestProject
 //
-//  Created by Sophie Liang on 2019/6/12.
+//  Created by Sophie Liang on 2019/6/13.
 //  Copyright © 2019 Sophie Liang. All rights reserved.
 //
 
 import UIKit
+import GMCharts
 
 class ViewController: UIViewController {
     
-    let chart = ChartView(frame: CGRect(x: 0, y: 60, width: 375, height: 200))
     let array: [Double] = {
         var arr: [Double] = []
         for i in 0...20 {
@@ -22,13 +22,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let chart = GMCharts(frame: CGRect(x: 0, y: 60, width: 375, height: 200))
+        chart.chartBottom = 10
         chart.edge = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
-        chart.chartBottom = 20
+
         chart.redraw()
         chart.drawLine(array: array, color: .red)
         
         view.addSubview(chart)
-        
     }
 
 

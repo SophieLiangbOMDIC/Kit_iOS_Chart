@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Charts
+//  TestProject
 //
-//  Created by Sophie Liang on 2019/6/12.
+//  Created by Sophie Liang on 2019/6/13.
 //  Copyright © 2019 Sophie Liang. All rights reserved.
 //
 

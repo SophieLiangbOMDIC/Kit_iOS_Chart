@@ -1,14 +1,14 @@
 //
-//  ChartView.swift
-//  Charts
+//  GMCharts.swift
+//  GMCharts
 //
-//  Created by Sophie Liang on 2019/6/12.
+//  Created by Sophie Liang on 2019/6/13.
 //  Copyright © 2019 Sophie Liang. All rights reserved.
 //
 
 import UIKit
 
-public class ChartView: UIView {
+public class GMCharts: UIView {
     
     enum Direction {
         case right, left
@@ -103,11 +103,11 @@ public class ChartView: UIView {
         self.addSubview(label)
     }
     
-    func drawLine(array: [Double], color: UIColor, isFilled: Bool = false) {
+    public func drawLine(array: [Double], color: UIColor, isFilled: Bool = false) {
         
         let maxData = array.max() ?? 0
         let minData = array.min() ?? 0
-
+        
         // 每個點的x間距
         let disX = chartWidth / CGFloat(array.count)
         
@@ -135,7 +135,7 @@ public class ChartView: UIView {
             }
         }
         
-         if isFilled {
+        if isFilled {
             path.addLine(to: CGPoint(x: chartMaxX, y: chartMaxY))
             path.addLine(to: CGPoint(x: chartMinX, y: chartMaxY))
             path.addLine(to: CGPoint(x: chartMinX, y: startY))
@@ -150,4 +150,5 @@ public class ChartView: UIView {
         layer.addSublayer(shapeLayer)
     }
     
+
 }
