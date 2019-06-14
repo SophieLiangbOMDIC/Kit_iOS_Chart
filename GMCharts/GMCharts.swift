@@ -29,6 +29,7 @@ public class GMCharts: UIView {
     private var rBottomLabel: UILabel = UILabel()
     
     private var lTopLabel: UILabel = UILabel()
+    private var lMidLabel: UILabel = UILabel()
     private var lBottomLabel: UILabel = UILabel()
     
     private var width: CGFloat = 0
@@ -89,17 +90,24 @@ public class GMCharts: UIView {
         drawLabel(label: rBottomLabel, text: bottom, color: color, rl: .right, y: chartMaxY)
     }
     
+    public func setLeftLabels(top: String, mid: String, bottom: String, color: UIColor) {
+        drawLabel(label: lTopLabel, text: top, color: color, rl: .left, y: chartMinY - space)
+        drawLabel(label: lMidLabel, text: mid, color: color, rl: .left, y: chartMaxY / 2)
+        drawLabel(label: lBottomLabel, text: bottom, color: color, rl: .left, y: chartMaxY)
+    }
+    
     func drawLabel(label: UILabel, text: String, color: UIColor, rl: Direction, y: CGFloat) {
-        let x = (rl == .right) ? chartMaxX - labelSize : 5
-        let width = (rl == .right) ? (chartMaxX - labelSize - 5) : chartMinX
-        
-        label.frame = CGRect(x: x, y: y - labelSize, width: width, height: 40)
+
         label.textColor = color
         label.textAlignment = .left
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.font = UIFont(name: "Avenir", size: labelSize)
         label.text = text
+        label.sizeToFit()
+        
+        let x = (rl == .right) ? chartMaxX + edge.right - label.frame.width : chartMinX - label.frame.width
+        label.frame = CGRect(x: x, y: y - labelSize, width: label.frame.width, height: 40)
         self.addSubview(label)
     }
     
