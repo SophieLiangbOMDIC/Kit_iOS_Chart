@@ -8,16 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		443C40FD22B2011300FB0C6F /* GMCharts.h in Headers */ = {isa = PBXBuildFile; fileRef = 443C40FB22B2011300FB0C6F /* GMCharts.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		443C410422B2012B00FB0C6F /* GMCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C410322B2012B00FB0C6F /* GMCharts.swift */; };
 		443C410C22B2020200FB0C6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C410B22B2020200FB0C6F /* AppDelegate.swift */; };
 		443C410E22B2020200FB0C6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C410D22B2020200FB0C6F /* ViewController.swift */; };
 		443C411122B2020200FB0C6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C410F22B2020200FB0C6F /* Main.storyboard */; };
 		443C411322B2020400FB0C6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443C411222B2020400FB0C6F /* Assets.xcassets */; };
 		443C411622B2020400FB0C6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C411422B2020400FB0C6F /* LaunchScreen.storyboard */; };
-		443C411C22B2023500FB0C6F /* GMCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443C40F822B2011300FB0C6F /* GMCharts.framework */; };
-		443C411E22B22C2D00FB0C6F /* GMChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C411D22B22C2C00FB0C6F /* GMChartModel.swift */; };
 		443C412622B232BC00FB0C6F /* GMChartsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C412522B232BC00FB0C6F /* GMChartsTests.swift */; };
 		443C412822B232BC00FB0C6F /* GMCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443C40F822B2011300FB0C6F /* GMCharts.framework */; };
+		4453821322B34B37009E392D /* GMChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4453821222B34B37009E392D /* GMChartModel.swift */; };
+		4453821522B34B40009E392D /* GMCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4453821422B34B3F009E392D /* GMCharts.swift */; };
+		4453821822B3826A009E392D /* GMCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443C40F822B2011300FB0C6F /* GMCharts.framework */; };
+		4453821922B3826A009E392D /* GMCharts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 443C40F822B2011300FB0C6F /* GMCharts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,13 +29,33 @@
 			remoteGlobalIDString = 443C40F722B2011300FB0C6F;
 			remoteInfo = GMCharts;
 		};
+		4453821A22B3826A009E392D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 443C40EF22B2011300FB0C6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 443C40F722B2011300FB0C6F;
+			remoteInfo = GMCharts;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4453821C22B3826A009E392D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4453821922B3826A009E392D /* GMCharts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		443C40F822B2011300FB0C6F /* GMCharts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GMCharts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		443C40FB22B2011300FB0C6F /* GMCharts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMCharts.h; sourceTree = "<group>"; };
 		443C40FC22B2011300FB0C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		443C410322B2012B00FB0C6F /* GMCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMCharts.swift; sourceTree = "<group>"; };
 		443C410922B2020200FB0C6F /* TestProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		443C410B22B2020200FB0C6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		443C410D22B2020200FB0C6F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,10 +63,11 @@
 		443C411222B2020400FB0C6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		443C411522B2020400FB0C6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		443C411722B2020400FB0C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		443C411D22B22C2C00FB0C6F /* GMChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMChartModel.swift; sourceTree = "<group>"; };
 		443C412322B232BC00FB0C6F /* GMChartsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GMChartsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		443C412522B232BC00FB0C6F /* GMChartsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMChartsTests.swift; sourceTree = "<group>"; };
 		443C412722B232BC00FB0C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4453821222B34B37009E392D /* GMChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMChartModel.swift; sourceTree = "<group>"; };
+		4453821422B34B3F009E392D /* GMCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMCharts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				443C411C22B2023500FB0C6F /* GMCharts.framework in Frameworks */,
+				4453821822B3826A009E392D /* GMCharts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,9 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				443C40FB22B2011300FB0C6F /* GMCharts.h */,
+				4453821222B34B37009E392D /* GMChartModel.swift */,
+				4453821422B34B3F009E392D /* GMCharts.swift */,
 				443C40FC22B2011300FB0C6F /* Info.plist */,
-				443C410322B2012B00FB0C6F /* GMCharts.swift */,
-				443C411D22B22C2C00FB0C6F /* GMChartModel.swift */,
 			);
 			path = GMCharts;
 			sourceTree = "<group>";
@@ -175,12 +197,16 @@
 				443C410522B2020200FB0C6F /* Sources */,
 				443C410622B2020200FB0C6F /* Frameworks */,
 				443C410722B2020200FB0C6F /* Resources */,
+				4453821C22B3826A009E392D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4453821B22B3826A009E392D /* PBXTargetDependency */,
 			);
 			name = TestProject;
+			packageProductDependencies = (
+			);
 			productName = TestProject;
 			productReference = 443C410922B2020200FB0C6F /* TestProject.app */;
 			productType = "com.apple.product-type.application";
@@ -277,8 +303,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				443C411E22B22C2D00FB0C6F /* GMChartModel.swift in Sources */,
-				443C410422B2012B00FB0C6F /* GMCharts.swift in Sources */,
+				4453821522B34B40009E392D /* GMCharts.swift in Sources */,
+				4453821322B34B37009E392D /* GMChartModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +332,11 @@
 			isa = PBXTargetDependency;
 			target = 443C40F722B2011300FB0C6F /* GMCharts */;
 			targetProxy = 443C412922B232BC00FB0C6F /* PBXContainerItemProxy */;
+		};
+		4453821B22B3826A009E392D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 443C40F722B2011300FB0C6F /* GMCharts */;
+			targetProxy = 4453821A22B3826A009E392D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -543,6 +574,7 @@
 		443C412C22B232BC00FB0C6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JRH8E985QQ;
 				INFOPLIST_FILE = GMChartsTests/Info.plist;
@@ -561,6 +593,7 @@
 		443C412D22B232BC00FB0C6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JRH8E985QQ;
 				INFOPLIST_FILE = GMChartsTests/Info.plist;

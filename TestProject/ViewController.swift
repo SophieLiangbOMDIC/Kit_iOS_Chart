@@ -37,9 +37,11 @@ class ViewController: UIViewController {
         chart.chartBottom = 50
         chart.edge = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
         chart.borderColor = .green
+        chart.labelSize = 15
 
         chart.redraw()
         chart.drawLine(array: models, color: .red, unit: .km)
+        chart.setRightLabels(top: "100%", mid: "50%", bottom: "0%", color: .orange)
 //        chart.drawLine(array: models, color: .yellow, unit: .km)
 
         let distance = models.max { $0.distance < $1.distance }!.distance
