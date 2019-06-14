@@ -24,14 +24,6 @@ public class GMCharts: UIView {
     public var space: CGFloat = 10
     public var borderColor: UIColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
     
-    private var rTopLabel: UILabel = UILabel()
-    private var rMidLabel: UILabel = UILabel()
-    private var rBottomLabel: UILabel = UILabel()
-    
-    private var lTopLabel: UILabel = UILabel()
-    private var lMidLabel: UILabel = UILabel()
-    private var lBottomLabel: UILabel = UILabel()
-    
     private var width: CGFloat = 0
     private var height: CGFloat = 0
     private var chartMinX: CGFloat = 0
@@ -64,51 +56,16 @@ public class GMCharts: UIView {
         drawBorder()
     }
     
-    func drawBorder() {
-        
-        let path = UIBezierPath()
-        // 畫左邊的線
-        path.move(to: CGPoint(x: chartMinX, y: chartMinY))
-        path.addLine(to: CGPoint(x: chartMinX, y: chartMaxY))
-        
-        // 畫右邊的線
-        path.move(to: CGPoint(x: chartMaxX, y: chartMinY))
-        path.addLine(to: CGPoint(x: chartMaxX, y: chartMaxY))
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.lineWidth = 1.0
-        shapeLayer.fillColor = nil
-        shapeLayer.strokeColor = borderColor.cgColor
-        layer.addSublayer(shapeLayer)
-        
-    }
-    
     public func setRightLabels(top: String, mid: String, bottom: String, color: UIColor) {
-        drawLabel(label: rTopLabel, text: top, color: color, rl: .right, y: chartMinY - space)
-        drawLabel(label: rMidLabel, text: mid, color: color, rl: .right, y: chartMaxY / 2)
-        drawLabel(label: rBottomLabel, text: bottom, color: color, rl: .right, y: chartMaxY)
+        drawYLabel(text: top, color: color, rl: .right, y: chartMinY - space)
+        drawYLabel(text: mid, color: color, rl: .right, y: chartMaxY / 2)
+        drawYLabel(text: bottom, color: color, rl: .right, y: chartMaxY)
     }
     
     public func setLeftLabels(top: String, mid: String, bottom: String, color: UIColor) {
-        drawLabel(label: lTopLabel, text: top, color: color, rl: .left, y: chartMinY - space)
-        drawLabel(label: lMidLabel, text: mid, color: color, rl: .left, y: chartMaxY / 2)
-        drawLabel(label: lBottomLabel, text: bottom, color: color, rl: .left, y: chartMaxY)
-    }
-    
-    func drawLabel(label: UILabel, text: String, color: UIColor, rl: Direction, y: CGFloat) {
-
-        label.textColor = color
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.font = UIFont(name: "Avenir", size: labelSize)
-        label.text = text
-        label.sizeToFit()
-        
-        let x = (rl == .right) ? chartMaxX + edge.right - label.frame.width : chartMinX - label.frame.width
-        label.frame = CGRect(x: x, y: y - labelSize, width: label.frame.width, height: 40)
-        self.addSubview(label)
+        drawYLabel(text: top, color: color, rl: .left, y: chartMinY - space)
+        drawYLabel(text: mid, color: color, rl: .left, y: chartMaxY / 2)
+        drawYLabel(text: bottom, color: color, rl: .left, y: chartMaxY)
     }
     
     public func drawLine(array: [GMChartModel], color: UIColor, unit: Unit, isFilled: Bool = false) {
@@ -180,8 +137,8 @@ public class GMCharts: UIView {
         
         let separators = getSeparatorArray(distance: distance)
         
-        drawBottomLabel(text: "0", x: chartMinX)
-        drawBottomLabel(text: String(format: "%.2f %@", distance, unit.rawValue), x: chartMaxX + edge.right)
+        drawXLabel(text: "0", color: color, x: chartMinX)
+        drawXLabel(text: String(format: "%.2f %@", distance, unit.rawValue), color: color, x: chartMaxX + edge.right)
 
         //每個點的x間距
         let disX = chartWidth / (CGFloat(separators.count) + 1)
@@ -198,13 +155,48 @@ public class GMCharts: UIView {
             shapeLayer.strokeColor = color.cgColor
             layer.addSublayer(shapeLayer)
             
-            drawBottomLabel(text: "\(item)", x: x)
+            drawXLabel(text: "\(item)", color: color, x: x)
         }
     }
     
-    func drawBottomLabel(text: String, x: CGFloat) {
+    func drawBorder() {
+        
+        let path = UIBezierPath()
+        // 畫左邊的線
+        path.move(to: CGPoint(x: chartMinX, y: chartMinY))
+        path.addLine(to: CGPoint(x: chartMinX, y: chartMaxY))
+        
+        // 畫右邊的線
+        path.move(to: CGPoint(x: chartMaxX, y: chartMinY))
+        path.addLine(to: CGPoint(x: chartMaxX, y: chartMaxY))
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.lineWidth = 1.0
+        shapeLayer.fillColor = nil
+        shapeLayer.strokeColor = borderColor.cgColor
+        layer.addSublayer(shapeLayer)
+        
+    }
+    
+    func drawYLabel(text: String, color: UIColor, rl: Direction, y: CGFloat) {
         let label = UILabel()
-        label.textColor = .yellow
+        label.textColor = color
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = UIFont(name: "Avenir", size: labelSize)
+        label.text = text
+        label.sizeToFit()
+        
+        let x = (rl == .right) ? chartMaxX + edge.right - label.frame.width : chartMinX - label.frame.width
+        label.frame = CGRect(x: x, y: y - labelSize, width: label.frame.width, height: 40)
+        self.addSubview(label)
+    }
+    
+    func drawXLabel(text: String, color: UIColor, x: CGFloat) {
+        let label = UILabel()
+        label.textColor = color
         label.textAlignment = .center
         label.font = UIFont(name: "Avenir", size: labelSize)
         label.text = text
